@@ -1,2 +1,3 @@
 # developer-social-network
-A social network for developers
+
+A social network for developers.
