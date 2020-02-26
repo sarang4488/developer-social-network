@@ -13,15 +13,13 @@ const User = require("../../models/User");
 // @access   Private
 router.get("/me", auth, async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate(
-      "user",
-      ["name", "avatar"]
-    );
+    const profile = await Profile.findOne({
+      user: req.user.id
+    }).populate("user", ["name", "avatar"]);
 
     if (!profile) {
       return res.status(400).json({ msg: "There is no profile for this user" });
-
-
+    }
     res.json(profile);
   } catch (err) {
     console.error(err.message);
@@ -51,7 +49,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const {
+    let {
       company,
       website,
       location,
@@ -68,6 +66,7 @@ router.post(
 
     // Build profile object
     const profileFields = {};
+    skills = skills.toString();
     profileFields.user = req.user.id;
     if (company) profileFields.company = company;
     if (website) profileFields.website = website;
